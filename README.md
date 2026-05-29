@@ -95,6 +95,23 @@ chmod +x build.sh
 
 This will create **libORB_SLAM3.so**  at *lib* folder and the executables in *Examples* folder.
 
+## OpenCV bootstrap for macOS and Windows
+The repository now includes scripts to download, extract, build, and install OpenCV **4.4.0** into `Thirdparty/opencv/4.4.0/install`.
+
+macOS:
+```bash
+./scripts/install_opencv_macos.sh
+source ./scripts/activate_opencv_macos.sh
+```
+
+Windows (PowerShell):
+```powershell
+.\scripts\install_opencv_windows.ps1
+. .\scripts\activate_opencv_windows.ps1
+```
+
+These activation scripts set `OpenCV_DIR`, `ORB_SLAM3_OPENCV_ROOT`, and `CMAKE_PREFIX_PATH` for the current shell session so CMake can find the project-local OpenCV install.
+
 # 4. Running ORB-SLAM3 with your camera
 
 Directory `Examples` contains several demo programs and calibration files to run ORB-SLAM3 in all sensor configurations with Intel Realsense cameras T265 and D435i. The steps needed to use your own camera are: 

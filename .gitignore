@@ -64,6 +64,10 @@ Thirdparty/DBoW2/lib/
 Thirdparty/g2o/build/
 Thirdparty/g2o/config.h
 Thirdparty/g2o/lib/
+Thirdparty/opencv/*/downloads/
+Thirdparty/opencv/*/src/
+Thirdparty/opencv/*/build/
+Thirdparty/opencv/*/install/
 Vocabulary/ORBvoc.txt
 build/
 

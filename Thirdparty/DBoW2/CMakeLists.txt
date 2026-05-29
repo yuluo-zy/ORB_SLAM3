@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 project(DBoW2)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -28,6 +28,11 @@ set(SRCS_DUTILS
   DUtils/Random.cpp
   DUtils/Timestamp.cpp)
 
+set(ORB_SLAM3_OPENCV_HINT_ROOTS
+  ${CMAKE_CURRENT_LIST_DIR}/../opencv/4.4.0/install
+  ${CMAKE_CURRENT_LIST_DIR}/../opencv/install
+)
+include(${CMAKE_CURRENT_LIST_DIR}/../../cmake/ResolveOpenCV.cmake)
 
 find_package(OpenCV 4 QUIET)
 if(NOT OpenCV_FOUND)

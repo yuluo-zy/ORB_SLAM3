@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 project(ORB_SLAM3)
 
 IF(NOT CMAKE_BUILD_TYPE)
@@ -29,6 +29,12 @@ else()
 endif()
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
+
+set(ORB_SLAM3_OPENCV_HINT_ROOTS
+  ${PROJECT_SOURCE_DIR}/Thirdparty/opencv/4.4.0/install
+  ${PROJECT_SOURCE_DIR}/Thirdparty/opencv/install
+)
+include(${PROJECT_SOURCE_DIR}/cmake/ResolveOpenCV.cmake)
 
 find_package(OpenCV 4.4)
    if(NOT OpenCV_FOUND)
