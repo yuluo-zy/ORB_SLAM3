@@ -29,6 +29,10 @@ if (Test-Path -LiteralPath $sourceDir) {
 
 Expand-Archive -LiteralPath $archivePath -DestinationPath $sourceParent -Force
 
+if (Test-Path -LiteralPath $buildDir) {
+    Remove-Item -Recurse -Force -LiteralPath $buildDir
+}
+
 if ($DownloadOnly) {
     Write-Host "OpenCV sources are available under $sourceDir"
     exit 0
@@ -42,7 +46,14 @@ $cmakeMakeProgram = $null
 if (-not $Generator) {
     if (Get-Command ninja -ErrorAction SilentlyContinue) {
         $Generator = "Ninja"
-    } else {
+    }
+    if (-not $Generator -and (Get-Command vswhere -ErrorAction SilentlyContinue)) {
+        $vs = & vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+        if ($vs) {
+            $Generator = "Visual Studio 17 2022"
+        }
+    }
+    if (-not $Generator) {
         $clionNinjaRoot = Join-Path $env:LOCALAPPDATA "Programs\CLion\bin\ninja"
         if (Test-Path -LiteralPath $clionNinjaRoot) {
             $preferredNinja = Join-Path $clionNinjaRoot "win\x64\ninja.exe"
@@ -64,12 +75,6 @@ if (-not $Generator) {
             $Generator = "Ninja"
         }
     }
-    if (-not $Generator -and (Get-Command vswhere -ErrorAction SilentlyContinue)) {
-        $vs = & vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
-        if ($vs) {
-            $Generator = "Visual Studio 17 2022"
-        }
-    }
 }
 
 if (-not $Generator) {
@@ -81,6 +86,7 @@ $configureArgs = @(
     "-B", $buildDir,
     "-DCMAKE_BUILD_TYPE=$BuildType",
     "-DCMAKE_INSTALL_PREFIX=$installDir",
+    "-DCMAKE_CXX_FLAGS=-Wno-error=return-type-c-linkage -Wno-return-type-c-linkage",
     "-DBUILD_LIST=calib3d,core,features2d,flann,highgui,imgcodecs,imgproc",
     "-DBUILD_opencv_apps=OFF",
     "-DBUILD_opencv_dnn=OFF",

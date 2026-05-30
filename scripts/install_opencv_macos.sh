@@ -45,6 +45,7 @@ fi
 
 rm -rf "${SOURCE_DIR}"
 tar -xzf "${ARCHIVE_PATH}" -C "${SOURCE_PARENT}"
+rm -rf "${BUILD_DIR}"
 
 if [[ "${DOWNLOAD_ONLY}" -eq 1 ]]; then
   echo "OpenCV sources are available under ${SOURCE_DIR}"
@@ -60,6 +61,7 @@ cmake -S "${SOURCE_DIR}" \
   -B "${BUILD_DIR}" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
+  -DCMAKE_CXX_FLAGS=-Wno-error=return-type-c-linkage\ -Wno-return-type-c-linkage \
   -DBUILD_LIST=calib3d,core,features2d,flann,highgui,imgcodecs,imgproc \
   -DBUILD_opencv_apps=OFF \
   -DBUILD_opencv_dnn=OFF \

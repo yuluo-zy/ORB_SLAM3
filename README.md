@@ -110,6 +110,11 @@ Windows (PowerShell):
 . .\scripts\activate_opencv_windows.ps1
 ```
 
+If your default Windows toolchain is `clang`, prefer an explicit Visual Studio generator:
+```powershell
+.\scripts\install_opencv_windows.ps1 -Generator "Visual Studio 17 2022"
+```
+
 These activation scripts set `OpenCV_DIR`, `ORB_SLAM3_OPENCV_ROOT`, and `CMAKE_PREFIX_PATH` for the current shell session so CMake can find the project-local OpenCV install.
 
 # 4. Running ORB-SLAM3 with your camera
